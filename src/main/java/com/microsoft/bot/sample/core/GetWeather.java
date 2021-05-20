@@ -13,15 +13,14 @@ import com.microsoft.bot.schema.InputHints;
 public class GetWeather {
 	
 	public static CompletableFuture<DialogTurnResult> get(RecognizerResult luisResult, WaterfallStepContext stepContext) {
-		
-		System.out.println("A");
+
 		JsonNode location_node = luisResult.getEntities().get("Location");
-		JsonNode datetime_node = luisResult.getEntities().get("datetimeV2");
+		JsonNode datetime_node = luisResult.getEntities().get("datetime");
 		
 		String location_name = location_node.get(0).get(0).asText();
-		System.out.println(datetime_node);
+		String datetime_text = datetime_node.get(0).get("timex").get(0).asText();
 		
-		String respone_message = "你是不是想知道關於 " + location_name + " 的天氣狀況呢?";
+		String respone_message = "你是不是想知道關於 " + location_name + " 在 " + datetime_text + " 的天氣狀況呢?";
 		
         Activity msg = MessageFactory
         .text(
