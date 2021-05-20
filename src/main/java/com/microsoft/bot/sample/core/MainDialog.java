@@ -80,8 +80,8 @@ public class MainDialog extends ComponentDialog {
         String weekLaterDate = LocalDateTime.now().plusDays(plusDayValue).format(formatter);
         String messageText = stepContext.getOptions() != null
             ? stepContext.getOptions().toString()
-            : String.format("What can I help you with today?\n"
-                + "Say something like \"Book a flight from Paris to Berlin on %s\"", weekLaterDate);
+            : String.format("Hi! I am Weather Chat Bot.\n"
+                + "Say something like \"What is the weather like in Tamsui on%s\"", weekLaterDate);
         Activity promptMessage = MessageFactory
             .text(messageText, messageText, InputHints.EXPECTING_INPUT);
         PromptOptions promptOptions = new PromptOptions();
@@ -109,15 +109,14 @@ public class MainDialog extends ComponentDialog {
         	System.out.println(luisResult.getTopScoringIntent().intent);
         	
             switch (luisResult.getTopScoringIntent().intent) {
-            	
-            	case "GetLocation": {
-            		
-            		return GetLocation.get(luisResult, stepContext);	
-            	}
                 case "GetWeather": {
                 	
                 	return GetWeather.get(luisResult, stepContext);	
                 }	
+                case "AskWeather":{
+
+                    return AskWeather.get(luisResult, stepContext);	
+                }
                 case "BookFlight":
                     // Extract the values for the composite entities from the LUIS result.
                     ObjectNode fromEntities = luisRecognizer.getFromEntities(luisResult);

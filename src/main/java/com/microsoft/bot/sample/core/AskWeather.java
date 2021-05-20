@@ -10,13 +10,17 @@ import com.microsoft.bot.dialogs.WaterfallStepContext;
 import com.microsoft.bot.schema.Activity;
 import com.microsoft.bot.schema.InputHints;
 
-public class GetLocation {
+public class AskWeather {
 	
 	public static CompletableFuture<DialogTurnResult> get(RecognizerResult luisResult, WaterfallStepContext stepContext) {
 		
 		JsonNode node = luisResult.getEntities().get("Location");
-		
+		JsonNode time_node = luisResult.getEntities().get("datetime");
+		JsonNode state_node = luisResult.getEntities().get("WeatherState");
+
 		String location_name = node.get(0).get(0).asText();
+
+		System.out.println(luisResult.getEntities());
 		
 		String respone_message = "你是不是想知道關於 " + location_name + " 的位置資訊?";
 		

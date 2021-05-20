@@ -19,9 +19,23 @@ public class GetWeather {
 		
 		String location_name = location_node.get(0).get(0).asText();
 		String datetime_text = datetime_node.get(0).get("timex").get(0).asText();
-		
-		String respone_message = "你是不是想知道關於 " + location_name + " 在 " + datetime_text + " 的天氣狀況呢?";
-		
+
+		System.out.println(location_name);
+		System.out.println(datetime_text);
+
+		String respone_message = null;
+
+		if(location_name != null){
+			respone_message = "The weather in " + location_name + " is sunny today.";
+		}
+		else if (datetime_node != null){
+			respone_message = "Please type the location to search the weather.";
+		}
+		else{
+			respone_message = "The weather in " + location_name + " on " + datetime_text + " is rainy.";
+		}
+
+				
         Activity msg = MessageFactory
         .text(
         		respone_message, respone_message,
