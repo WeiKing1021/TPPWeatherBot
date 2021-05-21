@@ -94,7 +94,7 @@ public class GetWeather {
 			return null;
 		}
 		
-		if (datetime_node.get(0).get("timex").has(0)) {
+		if (!datetime_node.get(0).get("timex").has(0)) {
 			
 			return null;
 		}
