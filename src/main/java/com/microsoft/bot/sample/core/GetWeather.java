@@ -51,54 +51,25 @@ public class GetWeather {
 	
 	private static String getLocation(RecognizerResult luisResult) {
 		
-		JsonNode entities = luisResult.getEntities();
-		
-		if (!entities.has("Location")) {
+		try {
+			
+			return luisResult.getEntities().get("Location").get(0).get(0).asText();
+		}
+		catch (Exception e) {
 			
 			return null;
 		}
-		
-		JsonNode location_node = entities.get("Location");
-		
-		if (!location_node.has(0)) {
-			
-			return null;
-		}
-		
-		if (!location_node.get(0).has(0)) {
-			
-			return null;
-		}
-		
-		return location_node.get(0).get(0).asText();
 	}
 	
 	private static String getDatetimeText(RecognizerResult luisResult) {
 		
-		JsonNode entities = luisResult.getEntities();
-		
-		if (!entities.has("datetime")) {
+		try {
+			
+			return luisResult.getEntities().get("datetime").get(0).get("timex").get(0).asText();
+		}
+		catch (Exception e) {
 			
 			return null;
 		}
-		
-		JsonNode datetime_node = entities.get("datetime");
-		
-		if (!datetime_node.has(0)) {
-			
-			return null;
-		}
-		
-		if (!datetime_node.get(0).has("timex")) {
-			
-			return null;
-		}
-		
-		if (!datetime_node.get(0).get("timex").has(0)) {
-			
-			return null;
-		}
-		
-		return datetime_node.get(0).get("timex").get(0).asText();
 	}
 }
