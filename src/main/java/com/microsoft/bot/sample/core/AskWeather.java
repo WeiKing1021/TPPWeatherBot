@@ -19,8 +19,11 @@ public class AskWeather {
 		JsonNode state_node = luisResult.getEntities().get("WeatherState");
 
 		String location_name = node.get(0).get(0).asText();
+		String datetime_text = time_node.get(0).get("timex").get(0).asText();
+		String weatherState = state_node.get(0).get(0).asText();
 
-		System.out.println(luisResult.getEntities());
+		System.out.println(state_node);
+		System.out.println(weatherState);
 		
 		String respone_message = "你是不是想知道關於 " + location_name + " 的位置資訊?";
 		

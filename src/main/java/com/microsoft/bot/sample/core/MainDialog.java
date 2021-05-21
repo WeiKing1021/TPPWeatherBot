@@ -81,7 +81,7 @@ public class MainDialog extends ComponentDialog {
         String messageText = stepContext.getOptions() != null
             ? stepContext.getOptions().toString()
             : String.format("Hi! I am Weather Chat Bot.\n"
-                + "Say something like \"What is the weather like in Tamsui on%s\"", weekLaterDate);
+                + "Say something like \"What is the weather like in Tamsui on %s\"", weekLaterDate);
         Activity promptMessage = MessageFactory
             .text(messageText, messageText, InputHints.EXPECTING_INPUT);
         PromptOptions promptOptions = new PromptOptions();
@@ -139,7 +139,7 @@ public class MainDialog extends ComponentDialog {
                         );
                 default:
                     // Catch all for unhandled intents
-                    String didntUnderstandMessageText = "我完全不知道你在說什麼= =";
+                    String didntUnderstandMessageText = "りしれ供さ小";
                     Activity didntUnderstandMessage = MessageFactory
                         .text(
                             didntUnderstandMessageText, didntUnderstandMessageText,
