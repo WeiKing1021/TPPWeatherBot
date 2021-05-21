@@ -13,51 +13,27 @@ import com.microsoft.bot.schema.InputHints;
 public class GetWeather {
 	
 	public static CompletableFuture<DialogTurnResult> get(RecognizerResult luisResult, WaterfallStepContext stepContext) {
-
-		System.out.println("A");
-
-		JsonNode location_node = luisResult.getEntities().get("Location");
-		JsonNode datetime_node = luisResult.getEntities().get("datetime");
 		
+		String location_name = getLocation(luisResult);
+		String datetime_text = getDatetimeText(luisResult);
 		
-		
-		String location_name = null;
-		String datetime_text = null;
-		System.out.println("B");
-		if(location_node.hasNonNull(0)) {
-			System.out.println("11");
-			location_name = location_node.get(0).get(0).asText();
-			System.out.println("12");
-		}
-		
-		if(datetime_node.hasNonNull(0)) {
-			System.out.println("21");
-			datetime_text = datetime_node.get(0).get("timex").get(0).asText();
-			System.out.println("22");
-		}
-		
-		
-		
-		System.out.println("C");
-		
-		
-
 		System.out.println(location_name);
 		System.out.println(datetime_text);
 		
 		String respone_message = null;
-
-		System.out.println("D");
-
+		
 		if(location_name != null && datetime_text != null){
+			
 			respone_message = "The weather in " + location_name + " on " + datetime_text + " is rainy.";
 			System.out.println("E1");
 		}
 		else if (datetime_text != null){
+			
 			System.out.println("E2");
 			respone_message = "Please type the location to search the weather.";
 		}
 		else if (location_name != null){
+			
 			System.out.println("E3");
 			respone_message = "The weather in " + location_name + " is sunny today.";
 		}
@@ -71,5 +47,58 @@ public class GetWeather {
         );
         
 		return stepContext.getContext().sendActivities(msg).thenCompose(resourceResponse -> stepContext.next(null));
+	}
+	
+	private static String getLocation(RecognizerResult luisResult) {
+		
+		JsonNode entities = luisResult.getEntities();
+		
+		if (!entities.has("Location")) {
+			
+			return null;
+		}
+		
+		JsonNode location_node = entities.get("Location");
+		
+		if (!location_node.has(0)) {
+			
+			return null;
+		}
+		
+		if (!location_node.get(0).has(0)) {
+			
+			return null;
+		}
+		
+		return location_node.get(0).get(0).asText();
+	}
+	
+	private static String getDatetimeText(RecognizerResult luisResult) {
+		
+		JsonNode entities = luisResult.getEntities();
+		
+		if (!entities.has("datetime")) {
+			
+			return null;
+		}
+		
+		JsonNode datetime_node = entities.get("datetime");
+		
+		if (!datetime_node.has(0)) {
+			
+			return null;
+		}
+		
+		if (!datetime_node.get(0).has("timex")) {
+			
+			return null;
+		}
+		
+		if (datetime_node.get(0).get("timex").has(0)) {
+			
+			return null;
+		}
+		
+		return datetime_node.get(0).get("timex").get(0).asText();
 	}
 }
